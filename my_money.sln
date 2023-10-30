@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMoney", "MyMoney\MyMoney.csproj", "{6B8E6783-15F7-4BF6-BB0C-6D1B593B493C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMoney.Test", "MyMoney.Test\MyMoney.Test.csproj", "{B0E50604-E4AB-40C4-95F0-BBD7B407135E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B8E6783-15F7-4BF6-BB0C-6D1B593B493C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B8E6783-15F7-4BF6-BB0C-6D1B593B493C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B8E6783-15F7-4BF6-BB0C-6D1B593B493C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B8E6783-15F7-4BF6-BB0C-6D1B593B493C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0E50604-E4AB-40C4-95F0-BBD7B407135E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0E50604-E4AB-40C4-95F0-BBD7B407135E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E50604-E4AB-40C4-95F0-BBD7B407135E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0E50604-E4AB-40C4-95F0-BBD7B407135E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

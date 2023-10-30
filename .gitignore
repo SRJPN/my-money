@@ -1,0 +1,6 @@
+bin/
+obj/
+geektrust/
+TestResults/
+coveragereport/
+tools/
