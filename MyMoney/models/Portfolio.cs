@@ -29,5 +29,7 @@ namespace MyMoney.models
                 assets[i].AddMarketChange(month, marketChanges[i]);
             }
         }
+
+        public static Portfolio Instance { get; set; }
     }
 }
