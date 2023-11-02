@@ -53,6 +53,7 @@ public class AssetTest
         var asset = new Asset(1000);
         asset.AddSip(500);
         asset.AddMarketChange(Month.JANUARY, 4);
+        asset.AddMarketChange(Month.FEBRUARY, 0);
 
 
         Assert.Equal(1540, asset.ShowBalance(Month.FEBRUARY));

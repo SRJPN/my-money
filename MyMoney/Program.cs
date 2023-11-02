@@ -13,7 +13,8 @@ namespace GeekTrust
             {"ALLOCATE", new AllocateCommandHandler()},
             {"SIP", new SIPCommandHandler()},
             {"CHANGE", new ChangeCommandHandler()},
-            {"BALANCE", new BalanceCommandHandler()}
+            {"BALANCE", new BalanceCommandHandler()},
+            {"REBALANCE", new RebalanceCommandHandler()}
         };
 
         static void Main(string[] args)

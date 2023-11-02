@@ -27,6 +27,9 @@ namespace MyMoney.Test.models
         {
             var portfolio = new Portfolio(1000, 1500, 2000);
             portfolio.AddSips(100, 150, 200);
+            portfolio.UpdateMonthlyChange(Month.JANUARY, 0, 0, 0);
+            portfolio.UpdateMonthlyChange(Month.FEBRUARY, 0, 0, 0);
+
 
             var expected = new int[] { 1100, 1650, 2200 };
 

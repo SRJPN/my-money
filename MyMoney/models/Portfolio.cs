@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,7 +6,9 @@ namespace MyMoney.models
 {
     public class Portfolio
     {
-        private readonly List<Asset> assets;
+        public static Portfolio Instance { get; set; } // Singleton instance 
+
+        private readonly IList<Asset> assets;
 
         public Portfolio(params int[] assetAllocations)
         {
@@ -22,7 +25,7 @@ namespace MyMoney.models
             }
         }
 
-        public void UpdateMonthlyChange(Month month, params double[] marketChanges)
+        public void UpdateMonthlyChange(Month month, params decimal[] marketChanges)
         {
             for (int i = 0; i < marketChanges.Length; i++)
             {
@@ -30,6 +33,19 @@ namespace MyMoney.models
             }
         }
 
-        public static Portfolio Instance { get; set; }
+        public int[] Rebalance()
+        {
+            var totalAllocatedAmount = assets.Sum(x => x.AllocatedAmount);
+            var totalBalance = assets.Sum(x => x.CurrentBalance);
+            Console.WriteLine($"{totalAllocatedAmount} {totalBalance}");
+
+            var balances = assets.Select(asset => {
+                var allocatedPercentage = (decimal)asset.AllocatedAmount/totalAllocatedAmount;
+                
+                var rebalancedAmount = allocatedPercentage * totalBalance;
+                return asset.Rebalance(rebalancedAmount);
+            });
+            return balances.ToArray();
+        }
     }
 }

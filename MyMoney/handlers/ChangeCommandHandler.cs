@@ -21,9 +21,9 @@ namespace MyMoney.handlers
             return null;
         }
 
-        private static double ParsePercentage(string x)
+        private static decimal ParsePercentage(string x)
         {
-            return double.Parse(x.TrimEnd('%'));
+            return decimal.Parse(x.TrimEnd('%'));
         }
     }
 }
