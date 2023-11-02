@@ -4,3 +4,4 @@ geektrust/
 TestResults/
 coveragereport/
 tools/
+.fake
