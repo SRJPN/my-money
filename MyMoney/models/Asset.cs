@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MyMoney.models;
 
@@ -31,12 +29,12 @@ public class Asset
     {
         var balance = 0;
         balance += initialAllocation;
-        balance += (int)(balance * marketChange[Month.JANUARY] / 100);
 
-        for (int i = 1; i <= (int)month; i++)
+        for (int i = 0; i <= (int)month; i++)
         {  
             var currentMonth = (Month)i;
-            balance += monthlySipAmount;
+            if (currentMonth != Month.JANUARY)
+                balance += monthlySipAmount;
             if(marketChange.ContainsKey(currentMonth))
             {
                balance += (int)(balance * marketChange[currentMonth] / 100);
@@ -44,21 +42,4 @@ public class Asset
         }
         return balance;
     }
-}
-
-public enum Month
-{
-    JANUARY,
-    FEBRUARY,
-    MARCH,
-    APRIL,
-    MAY,
-    JUNE,
-    JULY,
-    AUGUST,
-    SEPTEMBER,
-    OCTOBER,
-    NOVEMBER,
-    DECEMBER
-
 }

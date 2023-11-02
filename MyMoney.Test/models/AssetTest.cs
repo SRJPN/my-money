@@ -34,6 +34,14 @@ public class AssetTest
     public void ShowBalance_should_return_balance_for_the_given_month()
     {
         var asset = new Asset(1000);
+
+        Assert.Equal(1000, asset.ShowBalance(Month.JANUARY));
+    }
+
+    [Fact]
+    public void ShowBalance_should_return_balance_for_the_given_month_by_calculating_market_change()
+    {
+        var asset = new Asset(1000);
         asset.AddMarketChange(Month.JANUARY, 4);
 
         Assert.Equal(1040, asset.ShowBalance(Month.JANUARY));
