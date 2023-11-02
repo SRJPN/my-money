@@ -1,0 +1,13 @@
+using System;
+using MyMoney.models;
+
+namespace MyMoney.extensions
+{
+    public static class StringExtension
+    {
+        public static Month ToMonth(this string value)
+        {
+            return Enum.TryParse(value, true, out Month result) ? result : default;
+        }
+    }
+}
