@@ -22,6 +22,12 @@ namespace MyMoney.models
             }
         }
 
-
+        public void UpdateMonthlyChange(Month month, params int[] marketChanges)
+        {
+            for (int i = 0; i < marketChanges.Length; i++)
+            {
+                assets[i].AddMarketChange(month, marketChanges[i]);
+            }
+        }
     }
 }
