@@ -2,7 +2,7 @@ using MyMoney.models;
 
 namespace MyMoney.Test.models;
 
-public class PortfolioTests
+public class PortfolioTest
 {
     [Fact]
     public void Ctor_should_create_list_of_assets_with_initial_allocation_amounts()
