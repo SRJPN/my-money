@@ -6,3 +6,4 @@ coveragereport/
 tools/
 .fake
 */coverage.cobertura.xml
+*.zip

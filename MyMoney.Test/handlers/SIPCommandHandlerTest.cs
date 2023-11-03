@@ -1,30 +1,32 @@
 using Moq;
 using MyMoney.handlers;
 using MyMoney.models;
+using Xunit;
 
-namespace MyMoney.Test.handlers;
-
-public class SIPCommandHandlerTest
+namespace MyMoney.Test.handlers
 {
-    private readonly Mock<IPortfolioService> service;
-    private readonly SIPCommandHandler handler;
-
-    public SIPCommandHandlerTest()
+    public class SIPCommandHandlerTest
     {
-        service = new Mock<IPortfolioService>();
-        handler = new SIPCommandHandler(service.Object);
-    }
+        private readonly Mock<IPortfolioService> service;
+        private readonly SIPCommandHandler handler;
 
-    [Fact]
-    public void Execute_should_add_sip_amounts_to_existing_portfolio()
-    {
-        var portfolio = new Portfolio(1000, 500);
-        service.Setup(x => x.GetPortfolio()).Returns(portfolio);
+        public SIPCommandHandlerTest()
+        {
+            service = new Mock<IPortfolioService>();
+            handler = new SIPCommandHandler(service.Object);
+        }
 
-        handler.Execute("100", "50");
+        [Fact]
+        public void Execute_should_add_sip_amounts_to_existing_portfolio()
+        {
+            var portfolio = new Portfolio(1000, 500);
+            service.Setup(x => x.GetPortfolio()).Returns(portfolio);
 
-        portfolio.UpdateMonthlyChange(Month.FEBRUARY, 0, 0);
+            handler.Execute("100", "50");
 
-        Assert.Equal(new int[] { 1100, 550 }, portfolio.ShowBalances(Month.FEBRUARY));
+            portfolio.UpdateMonthlyChange(Month.FEBRUARY, 0, 0);
+
+            Assert.Equal(new int[] { 1100, 550 }, portfolio.ShowBalances(Month.FEBRUARY));
+        }
     }
 }

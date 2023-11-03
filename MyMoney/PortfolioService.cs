@@ -1,30 +1,31 @@
 using System;
 using MyMoney.models;
 
-namespace MyMoney;
-
-public class PortfolioService : IPortfolioService
+namespace MyMoney
 {
-    private Portfolio Instance { get; set; }
-
-    public Portfolio GetPortfolio()
+    public class PortfolioService : IPortfolioService
     {
-        if (Instance == null)
+        private Portfolio Instance { get; set; }
+
+        public Portfolio GetPortfolio()
         {
-            throw new Exception("Portfolio is not allocated");
+            if (Instance == null)
+            {
+                throw new Exception("Portfolio is not allocated");
+            }
+            return Instance;
         }
-        return Instance;
+
+        public Portfolio InitializePortfolio(Portfolio portfolio)
+        {
+            Instance = portfolio;
+            return Instance;
+        }
     }
 
-    public Portfolio InitializePortfolio(Portfolio portfolio)
+    public interface IPortfolioService
     {
-        Instance = portfolio;
-        return Instance;
+        Portfolio GetPortfolio();
+        Portfolio InitializePortfolio(Portfolio portfolio);
     }
-}
-
-public interface IPortfolioService
-{
-    Portfolio GetPortfolio();
-    Portfolio InitializePortfolio(Portfolio portfolio);
 }

@@ -2,56 +2,57 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MyMoney.models;
-
-public class Portfolio
+namespace MyMoney.models
 {
-
-    private readonly IList<Asset> assets;
-
-    public Portfolio(params int[] assetAllocations)
+    public class Portfolio
     {
-        assets = assetAllocations.Select(assetAllocation => new Asset(assetAllocation)).ToList();
-    }
 
-    public int[] ShowBalances(Month month) => assets.Select(asset => asset.ShowBalance(month)).ToArray();
+        private readonly IList<Asset> assets;
 
-    public void AddSips(params int[] sipAmounts)
-    {
-        for (int i = 0; i < sipAmounts.Length; i++)
+        public Portfolio(params int[] assetAllocations)
         {
-            assets[i].AddSip(sipAmounts[i]);
-        }
-    }
-
-    public void UpdateMonthlyChange(Month month, params decimal[] marketChanges)
-    {
-        for (int i = 0; i < marketChanges.Length; i++)
-        {
-            assets[i].AddMarketChange(month, marketChanges[i]);
-        }
-    }
-
-    public int[] Rebalance()
-    {
-        if (!CanRebalance)
-        {
-            throw new Exception("Portfolio cannot be rebalanced");
+            assets = assetAllocations.Select(assetAllocation => new Asset(assetAllocation)).ToList();
         }
 
-        var totalAllocatedAmount = assets.Sum(x => x.AllocatedAmount);
-        var totalBalance = assets.Sum(x => x.CurrentBalance);
+        public int[] ShowBalances(Month month) => assets.Select(asset => asset.ShowBalance(month)).ToArray();
 
-        var balances = assets.Select(asset =>
+        public void AddSips(params int[] sipAmounts)
         {
-            decimal allocatedPercentage = (decimal)asset.AllocatedAmount / totalAllocatedAmount;
+            for (int i = 0; i < sipAmounts.Length; i++)
+            {
+                assets[i].AddSip(sipAmounts[i]);
+            }
+        }
 
-            var rebalancedAmount = Math.Floor(decimal.Round(allocatedPercentage * totalBalance, 2));
-            // Console.WriteLine($"{allocatedPercentage * totalBalance} {allocatedPercentage} {totalBalance}");
-            return asset.Rebalance((int)rebalancedAmount);
-        });
-        return balances.ToArray();
+        public void UpdateMonthlyChange(Month month, params decimal[] marketChanges)
+        {
+            for (int i = 0; i < marketChanges.Length; i++)
+            {
+                assets[i].AddMarketChange(month, marketChanges[i]);
+            }
+        }
+
+        public int[] Rebalance()
+        {
+            if (!CanRebalance)
+            {
+                throw new Exception("Portfolio cannot be rebalanced");
+            }
+
+            var totalAllocatedAmount = assets.Sum(x => x.AllocatedAmount);
+            var totalBalance = assets.Sum(x => x.CurrentBalance);
+
+            var balances = assets.Select(asset =>
+            {
+                decimal allocatedPercentage = (decimal)asset.AllocatedAmount / totalAllocatedAmount;
+
+                var rebalancedAmount = Math.Floor(decimal.Round(allocatedPercentage * totalBalance, 2));
+                // Console.WriteLine($"{allocatedPercentage * totalBalance} {allocatedPercentage} {totalBalance}");
+                return asset.Rebalance((int)rebalancedAmount);
+            });
+            return balances.ToArray();
+        }
+
+        public bool CanRebalance => assets.All(asset => asset.CanRebalance);
     }
-
-    public bool CanRebalance => assets.All(asset => asset.CanRebalance);
 }

@@ -1,20 +1,21 @@
 using MyMoney.extensions;
 
-namespace MyMoney.handlers;
-
-public class BalanceCommandHandler : ICommandHandler
+namespace MyMoney.handlers
 {
-    private readonly IPortfolioService service;
-
-    public BalanceCommandHandler(IPortfolioService service)
+    public class BalanceCommandHandler : ICommandHandler
     {
-        this.service = service;
-    }
+        private readonly IPortfolioService service;
 
-    public string Execute(params string[] args)
-    {
-        var currentMonth = args[0].ToMonth();
-        var balances = service.GetPortfolio().ShowBalances(currentMonth);
-        return string.Join(" ", balances);
+        public BalanceCommandHandler(IPortfolioService service)
+        {
+            this.service = service;
+        }
+
+        public string Execute(params string[] args)
+        {
+            var currentMonth = args[0].ToMonth();
+            var balances = service.GetPortfolio().ShowBalances(currentMonth);
+            return string.Join(" ", balances);
+        }
     }
 }
