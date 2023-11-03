@@ -30,14 +30,19 @@ public class Asset
     {
         marketChange.Add(month, changeInPercentage);
         if (monthlyBalance.ContainsKey(month))
-            monthlyBalance[month] += (int)(monthlyBalance[month] * changeInPercentage / 100);
+            monthlyBalance[month] += CalculateChangedAmount(changeInPercentage, monthlyBalance[month]);
         else
         {
             var previousMonth = month - 1;
             var currentBalance = monthlyBalance[previousMonth] + monthlySipAmount;
-            currentBalance += (int)(currentBalance * changeInPercentage / 100);
+            currentBalance += CalculateChangedAmount(changeInPercentage, currentBalance);
             monthlyBalance.Add(month, currentBalance);
         }
+    }
+
+    private static int CalculateChangedAmount(decimal changeInPercentage, int currentBalance)
+    {
+        return (int)Math.Floor(currentBalance * changeInPercentage / 100);
     }
 
     public void AddSip(int monthlySipAmount)
@@ -52,16 +57,10 @@ public class Asset
         return monthlyBalance[month];
     }
 
-    public int Rebalance(decimal rebalancedAmount)
+    public int Rebalance(int rebalancedAmount)
     {
         var currentMonth = (Month)(marketChange.Count - 1);
-        var previousMonth = (Month)(marketChange.Count - 2);
-        // Console.WriteLine($"{marketChange.Count} {(Month)(marketChange.Count - 1)}");
-        var rebalancePercentage = (rebalancedAmount - ShowBalance(previousMonth)) / ShowBalance(previousMonth);
-
-        marketChange[currentMonth] = rebalancePercentage * 100;
-
-        Console.WriteLine($"{marketChange[currentMonth]} {ShowBalance(currentMonth)}");
+        monthlyBalance[currentMonth] = rebalancedAmount;
         return ShowBalance(currentMonth);
     }
 
@@ -73,4 +72,6 @@ public class Asset
             return ShowBalance((Month)currentMonth);
         }
     }
+
+    public bool CanRebalance => monthlyBalance.Count >= 6;
 }

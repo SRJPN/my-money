@@ -37,15 +37,18 @@ namespace MyMoney.models
         {
             var totalAllocatedAmount = assets.Sum(x => x.AllocatedAmount);
             var totalBalance = assets.Sum(x => x.CurrentBalance);
-            Console.WriteLine($"{totalAllocatedAmount} {totalBalance}");
 
-            var balances = assets.Select(asset => {
-                var allocatedPercentage = (decimal)asset.AllocatedAmount/totalAllocatedAmount;
-                
-                var rebalancedAmount = allocatedPercentage * totalBalance;
-                return asset.Rebalance(rebalancedAmount);
+            var balances = assets.Select(asset =>
+            {
+                decimal allocatedPercentage = (decimal)asset.AllocatedAmount / totalAllocatedAmount;
+
+                var rebalancedAmount = Math.Floor(decimal.Round(allocatedPercentage * totalBalance, 2));
+                // Console.WriteLine($"{allocatedPercentage * totalBalance} {allocatedPercentage} {totalBalance}");
+                return asset.Rebalance((int)rebalancedAmount);
             });
             return balances.ToArray();
         }
+
+        public bool CanRebalance => assets[0].CanRebalance;
     }
 }

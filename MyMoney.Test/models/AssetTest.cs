@@ -24,6 +24,15 @@ public class AssetTest
     }
 
     [Fact]
+    public void AddMarketChange_should_floor_the_amount()
+    {
+        var asset = new Asset(4329);
+        asset.AddMarketChange(Month.JANUARY, (decimal)-5.00);
+
+        Assert.Equal(4112, asset.ShowBalance(Month.JANUARY));
+    }
+
+    [Fact]
     public void AddSip_should_add_monthly_sip_amount_to_asset()
     {
         var asset = new Asset(1000);

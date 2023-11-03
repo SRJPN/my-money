@@ -11,7 +11,10 @@ namespace MyMoney.handlers
             {
                 throw new Exception("Portfolio is not allocated");
             }
-            var balances = Portfolio.Instance.Rebalance();
+            var portfolio = Portfolio.Instance;
+            if (!portfolio.CanRebalance)
+                return "CANNOT_REBALANCE";
+            var balances = portfolio.Rebalance();
             return string.Join(" ", balances);
         }
     }
