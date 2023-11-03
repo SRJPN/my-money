@@ -1,20 +1,20 @@
-using System;
 using MyMoney.extensions;
-using MyMoney.models;
 
-namespace MyMoney.handlers
+namespace MyMoney.handlers;
+
+public class BalanceCommandHandler : ICommandHandler
 {
-    public class BalanceCommandHandler : ICommandHandler
+    private readonly IPortfolioService service;
+
+    public BalanceCommandHandler(IPortfolioService service)
     {
-        public string Execute(params string[] args)
-        {
-            if (Portfolio.Instance == null)
-            {
-                throw new Exception("Portfolio is not allocated");
-            }
-            var currentMonth = args[0].ToMonth();
-            var balances = Portfolio.Instance.ShowBalances(currentMonth);
-            return string.Join(" ", balances);
-        }
+        this.service = service;
+    }
+
+    public string Execute(params string[] args)
+    {
+        var currentMonth = args[0].ToMonth();
+        var balances = service.GetPortfolio().ShowBalances(currentMonth);
+        return string.Join(" ", balances);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using MyMoney;
 using MyMoney.handlers;
 using MyMoney.models;
 
@@ -11,12 +12,13 @@ namespace GeekTrust;
 [ExcludeFromCodeCoverage]
 class Program
 {
-    static IDictionary<string, ICommandHandler> handlers = new Dictionary<string, ICommandHandler> {
-        {"ALLOCATE", new AllocateCommandHandler()},
-        {"SIP", new SIPCommandHandler()},
-        {"CHANGE", new ChangeCommandHandler()},
-        {"BALANCE", new BalanceCommandHandler()},
-        {"REBALANCE", new RebalanceCommandHandler()}
+    static readonly IPortfolioService service = new PortfolioService();
+    static readonly IDictionary<string, ICommandHandler> handlers = new Dictionary<string, ICommandHandler> {
+        {"ALLOCATE", new AllocateCommandHandler(service)},
+        {"SIP", new SIPCommandHandler(service)},
+        {"CHANGE", new ChangeCommandHandler(service)},
+        {"BALANCE", new BalanceCommandHandler(service)},
+        {"REBALANCE", new RebalanceCommandHandler(service)}
     };
 
     static void Main(string[] args)
@@ -41,7 +43,7 @@ class Program
 
     private static ICommandHandler GetHandler(string command)
     {
-        if(!handlers.ContainsKey(command))
+        if (!handlers.ContainsKey(command))
             throw new Exception("INVALID COMMAND PROVIDED");
         return handlers[command];
     }

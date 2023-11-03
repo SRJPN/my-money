@@ -1,21 +1,19 @@
-using System;
-using MyMoney.models;
+namespace MyMoney.handlers;
 
-namespace MyMoney.handlers
+public class RebalanceCommandHandler : ICommandHandler
 {
-    public class RebalanceCommandHandler : ICommandHandler
+    private readonly IPortfolioService service;
+    public RebalanceCommandHandler(IPortfolioService service)
     {
-        public string Execute(params string[] args)
-        {
-            if (Portfolio.Instance == null)
-            {
-                throw new Exception("Portfolio is not allocated");
-            }
-            var portfolio = Portfolio.Instance;
-            if (!portfolio.CanRebalance)
-                return "CANNOT_REBALANCE";
-            var balances = portfolio.Rebalance();
-            return string.Join(" ", balances);
-        }
+        this.service = service;
+    }
+
+    public string Execute(params string[] args)
+    {
+        var portfolio = service.GetPortfolio();
+        if (!portfolio.CanRebalance)
+            return "CANNOT_REBALANCE";
+        var balances = portfolio.Rebalance();
+        return string.Join(" ", balances);
     }
 }

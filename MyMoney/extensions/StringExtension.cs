@@ -1,13 +1,14 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using MyMoney.models;
 
-namespace MyMoney.extensions
+namespace MyMoney.extensions;
+
+[ExcludeFromCodeCoverage]
+public static class StringExtension
 {
-    public static class StringExtension
+    public static Month ToMonth(this string value)
     {
-        public static Month ToMonth(this string value)
-        {
-            return Enum.TryParse(value, true, out Month result) ? result : default;
-        }
+        return Enum.TryParse(value, true, out Month result) ? result : default;
     }
 }

@@ -1,7 +1,6 @@
-namespace MyMoney.handlers
+namespace MyMoney.handlers;
+
+public interface ICommandHandler
 {
-    public interface ICommandHandler
-    {
-        string Execute(params string[] args);
-    }
+    string Execute(params string[] args);
 }

@@ -1,18 +1,19 @@
-using System;
 using System.Linq;
-using MyMoney.models;
 
-namespace MyMoney.handlers
+namespace MyMoney.handlers;
+
+public class SIPCommandHandler : ICommandHandler
 {
-    public class SIPCommandHandler : ICommandHandler
+    private readonly IPortfolioService service;
+
+    public SIPCommandHandler(IPortfolioService service)
     {
-        public string Execute(params string[] args)
-        {
-            if(Portfolio.Instance == null) {
-                throw new Exception("Portfolio is not allocated");
-            }
-            Portfolio.Instance.AddSips(args.Select(int.Parse).ToArray());
-            return null;
-        }
+        this.service = service;
+    }
+
+    public string Execute(params string[] args)
+    {
+        service.GetPortfolio().AddSips(args.Select(int.Parse).ToArray());
+        return null;
     }
 }
