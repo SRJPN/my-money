@@ -53,13 +53,15 @@ public class Asset
     public int ShowBalance(Month month)
     {
         if (!monthlyBalance.ContainsKey(month))
-            return 0;
+            return CurrentBalance;
         return monthlyBalance[month];
     }
 
     public int Rebalance(int rebalancedAmount)
     {
         var currentMonth = (Month)(marketChange.Count - 1);
+        if (!CanRebalance)
+            return ShowBalance(currentMonth);
         monthlyBalance[currentMonth] = rebalancedAmount;
         return ShowBalance(currentMonth);
     }
@@ -68,7 +70,7 @@ public class Asset
     {
         get
         {
-            var currentMonth = marketChange.Count - 1;
+            var currentMonth = monthlyBalance.Count - 1;
             return ShowBalance((Month)currentMonth);
         }
     }
