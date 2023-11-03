@@ -35,6 +35,10 @@ namespace MyMoney.models
 
         public int[] Rebalance()
         {
+            if(!CanRebalance) {
+                throw new Exception("Portfolio cannot be rebalanced");
+            }
+
             var totalAllocatedAmount = assets.Sum(x => x.AllocatedAmount);
             var totalBalance = assets.Sum(x => x.CurrentBalance);
 
@@ -49,6 +53,6 @@ namespace MyMoney.models
             return balances.ToArray();
         }
 
-        public bool CanRebalance => assets[0].CanRebalance;
+        public bool CanRebalance => assets.All(asset => asset.CanRebalance);
     }
 }
